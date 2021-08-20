@@ -1,5 +1,6 @@
 {
   "name": "temperature-calculator",
+    "homepage": "https://asudbury.github.io/temperature-calculator",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

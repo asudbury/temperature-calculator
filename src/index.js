@@ -1,17 +1,75 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React, { useState } from "react";
+import ReactDOM from "react-dom";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const scaleNames = {
+  c: "Celsius",
+  f: "Fahrenheit",
+};
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+function toCelsius(fahrenheit) {
+  return ((fahrenheit - 32) * 5) / 9;
+}
+
+function toFahrenheit(celsius) {
+  return (celsius * 9) / 5 + 32;
+}
+
+function tryConvert(temperature, convert) {
+  const input = parseFloat(temperature);
+  if (Number.isNaN(input)) {
+    return "";
+  }
+  const output = convert(input);
+  const rounded = Math.round(output * 1000) / 1000;
+  return rounded.toString();
+}
+
+function BoilingVerdict(props) {
+  if (props.celsius >= 100) {
+    return <p>The water would boil.</p>;
+  }
+  return <p>The water would not boil.</p>;
+}
+
+function TemperatureInput({ scale, temperature, onTemperatureChange }) {
+  function handleChange(e) {
+    onTemperatureChange(scale, e.target.value);
+  }
+
+  return (
+    <fieldset>
+      <legend>Enter temperature in {scaleNames[scale]}:</legend>
+      <input value={temperature} onChange={handleChange} />
+    </fieldset>
+  );
+}
+
+function Calculator() {
+  const [celsius, setCelsius] = useState(0);
+  const [fahrenheit, setFahrenheit] = useState(0);
+
+  function handleTemperatureChange(scale, value) {
+    const fahrenheit = scale === "c" ? tryConvert(value, toFahrenheit) : value;
+    setFahrenheit(fahrenheit);
+    const celsius = scale === "f" ? tryConvert(value, toCelsius) : value;
+    setCelsius(celsius);
+  }
+
+  return (
+    <div>
+      <TemperatureInput
+        scale="c"
+        temperature={celsius}
+        onTemperatureChange={handleTemperatureChange}
+      />
+      <TemperatureInput
+        scale="f"
+        temperature={fahrenheit}
+        onTemperatureChange={handleTemperatureChange}
+      />
+      <BoilingVerdict celsius={parseFloat(celsius)} />
+    </div>
+  );
+}
+
+ReactDOM.render(<Calculator />, document.getElementById("root"));
