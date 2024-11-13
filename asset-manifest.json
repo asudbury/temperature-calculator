@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/temperature-calculator/static/js/main.4be7b1cb.js",
+    "main.js": "/temperature-calculator/static/js/main.9b154452.js",
     "index.html": "/temperature-calculator/index.html",
-    "main.4be7b1cb.js.map": "/temperature-calculator/static/js/main.4be7b1cb.js.map"
+    "main.9b154452.js.map": "/temperature-calculator/static/js/main.9b154452.js.map"
   },
   "entrypoints": [
-    "static/js/main.4be7b1cb.js"
+    "static/js/main.9b154452.js"
   ]
 }
